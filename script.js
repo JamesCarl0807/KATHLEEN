@@ -15,84 +15,84 @@ let fireworksParticles = [];
 let runningConfetti = false;
 let runningFireworks = false;
 
-function lightCandles(){
-  candles.classList.add('on');
-  btnLight.style.display = "none";
-  btnBlow.style.display = "inline-block";
-  btnMessage.style.display = "inline-block";
-  music.currentTime = 0;
-  music.play().catch(() => alert("Click again to allow music 🎵"));
-}
-function relightCandles() {
-    candles.classList.add('on');           // turn flames back on
-    btnRelight.style.display = "none";    // hide this button
-    btnBlow.style.display = "inline-block"; // show blow button
-    btnMessage.style.display = "inline-block"; // optional: keep message button visible
-}
-function blowCandles(){
-    candles.classList.remove('on');
-  
-    // Show pictures on each layer
-    document.querySelectorAll('.layer-pic').forEach(pic => {
-      pic.style.display = 'block';
-    });
+function lightCandles() {
+    candles.classList.add('on');
+    btnLight.style.display = "none";     // hide light
+    btnBlow.style.display = "inline-block";  // show blow out
+    btnMessage.style.display = "none";   // hide message until blow out
+    btnRelight.style.display = "none";   // hide relight
+    music.currentTime = 0;
+    music.play().catch(() => alert("Click again to allow music 🎵"));
   }
-function blowCandles() {
+  
+  function blowCandles() {
     candles.classList.remove('on');
     
-    // Show pictures on each layer
+    // show cake pictures
     document.querySelectorAll('.layer-pic').forEach(pic => {
       pic.style.display = 'block';
     });
-
-    // Show relight button
+  
+    // show My Message and Relight buttons
+    btnMessage.style.display = "inline-block";
     btnRelight.style.display = "inline-block";
-}  
-function showMessage(){
-  typingTimeouts.forEach(timeout => clearTimeout(timeout));
-  typingTimeouts = [];
-
-  let lines = [
-    "Happy Birthday, Maam Kathleen Mae Vallespin! ❤️",
-    "Wishing you an amazing day filled with laughter, joy, and lots of cake! 🍰",
-    "May all your dreams come true this year, and may you continue to shine bright like the wonderful person you are.",
-    "Cheers to more fun memories, smiles, and adventures ahead! 🥳💖"
-
-
-  ];
-
-  const containerEl = document.querySelector(".message-container");
-  containerEl.classList.add("show");
-
-  const msgEl = document.querySelector(".message");
-  msgEl.innerHTML = "";
-  let i = 0;
-
-  function typing(){
-    if(i < lines.length){
-      let line = lines[i];
-      let j = 0;
-
-      function typeLine(){
-        if(j < line.length){
-          msgEl.innerHTML += line.charAt(j);
-          j++;
-          typingTimeouts.push(setTimeout(typeLine, 50));
-        } else {
-          msgEl.innerHTML += "<br><br>";
-          i++;
-          typingTimeouts.push(setTimeout(typing, 100));
-        }
-      }
-      typeLine();
-    } else {
-      startConfetti();
-      startFireworks();
-    }
+  
+    // keep blow button hidden until next relight
+    btnBlow.style.display = "none";
   }
-  typing();
-}
-
+  
+  function showMessage() {
+    // show message container
+    const containerEl = document.querySelector(".message-container");
+    containerEl.classList.add("show");
+  
+    // typing effect
+    let lines = [
+      "Happy Birthday, Maam Kathleen Mae Vallespin! ❤️",
+      "Wishing you an amazing day filled with laughter, joy, and lots of cake! 🍰",
+      "May all your dreams come true this year, and may you continue to shine bright like the wonderful person you are.",
+      "Cheers to more fun memories, smiles, and adventures ahead! 🥳💖"
+    ];
+  
+    const msgEl = document.querySelector(".message");
+    msgEl.innerHTML = "";
+    let i = 0;
+  
+    function typing() {
+      if(i < lines.length){
+        let line = lines[i];
+        let j = 0;
+  
+        function typeLine() {
+          if(j < line.length){
+            msgEl.innerHTML += line.charAt(j);
+            j++;
+            setTimeout(typeLine, 50);
+          } else {
+            msgEl.innerHTML += "<br><br>";
+            i++;
+            setTimeout(typing, 100);
+          }
+        }
+        typeLine();
+      } else {
+        // start confetti and fireworks
+        startConfetti();
+        startFireworks();
+        // After showing message, keep My Message and Relight buttons visible
+        btnMessage.style.display = "inline-block";
+        btnRelight.style.display = "inline-block";
+      }
+    }
+    typing();
+  }
+  
+  function relightCandles() {
+    candles.classList.add('on');
+    btnRelight.style.display = "inline-block";   // keep relight available
+    btnBlow.style.display = "inline-block";      // show blow out again
+  }
+  
 // CONFETTI
 function startConfetti(){
   resizeCanvas();
@@ -184,5 +184,3 @@ window.addEventListener('resize', resizeCanvas);
 
 resizeCanvas();
 animate();
-
-
