@@ -22,7 +22,12 @@ function lightCandles(){
   music.currentTime = 0;
   music.play().catch(() => alert("Click again to allow music 🎵"));
 }
-
+function relightCandles() {
+    candles.classList.add('on');           // turn flames back on
+    btnRelight.style.display = "none";    // hide this button
+    btnBlow.style.display = "inline-block"; // show blow button
+    btnMessage.style.display = "inline-block"; // optional: keep message button visible
+}
 function blowCandles(){
     candles.classList.remove('on');
   
@@ -168,3 +173,4 @@ window.addEventListener('resize', resizeCanvas);
 
 resizeCanvas();
 animate();
+
