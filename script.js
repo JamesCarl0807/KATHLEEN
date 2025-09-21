@@ -7,6 +7,7 @@ const music = document.getElementById('bg-music');
 const btnLight = document.getElementById("btn-light");
 const btnBlow = document.getElementById("btn-blow");
 const btnMessage = document.getElementById("btn-message");
+const btnRelight = document.getElementById("btn-relight");
 
 let typingTimeouts = [];
 let confettiPieces = [];
@@ -36,7 +37,17 @@ function blowCandles(){
       pic.style.display = 'block';
     });
   }
-  
+function blowCandles() {
+    candles.classList.remove('on');
+    
+    // Show pictures on each layer
+    document.querySelectorAll('.layer-pic').forEach(pic => {
+      pic.style.display = 'block';
+    });
+
+    // Show relight button
+    btnRelight.style.display = "inline-block";
+}  
 function showMessage(){
   typingTimeouts.forEach(timeout => clearTimeout(timeout));
   typingTimeouts = [];
@@ -173,4 +184,5 @@ window.addEventListener('resize', resizeCanvas);
 
 resizeCanvas();
 animate();
+
 
