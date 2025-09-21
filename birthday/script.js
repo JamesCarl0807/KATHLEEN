@@ -24,9 +24,14 @@ function lightCandles(){
 }
 
 function blowCandles(){
-  candles.classList.remove('on');
-}
-
+    candles.classList.remove('on');
+  
+    // Show pictures on each layer
+    document.querySelectorAll('.layer-pic').forEach(pic => {
+      pic.style.display = 'block';
+    });
+  }
+  
 function showMessage(){
   typingTimeouts.forEach(timeout => clearTimeout(timeout));
   typingTimeouts = [];
@@ -36,6 +41,8 @@ function showMessage(){
     "Wishing you an amazing day filled with laughter, joy, and lots of cake! 🍰",
     "May all your dreams come true this year, and may you continue to shine bright like the wonderful person you are.",
     "Cheers to more fun memories, smiles, and adventures ahead! 🥳💖"
+
+
   ];
 
   const containerEl = document.querySelector(".message-container");
