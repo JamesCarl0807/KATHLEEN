@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Happy Birthday ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffbad7, #6b2d5c);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow: hidden;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .container {
+      text-align: center;
+      position: relative;
+      max-width: 95%;
+    }
+
+    /* GLOWING GREETING */
+    .greeting {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ff5c9e, 0 0 30px #ff5c9e;
+      opacity: 0;
+      animation: fadeIn 3s ease forwards, glow 2s ease-in-out infinite alternate;
+      word-wrap: break-word;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #fff, 0 0 15px #ff5c9e, 0 0 25px #ff5c9e; }
+      to { text-shadow: 0 0 20px #fff, 0 0 30px #ff5c9e, 0 0 40px #ff5c9e; }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* CAKE */
+    .cake {
+      position: relative;
+      width: 200px;
+      margin: 0 auto 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .layer {
+      border-radius: 12px;
+      margin: 0 auto;
+    }
+    .layer1 {
+      width: 200px;
+      height: 70px;
+      background: linear-gradient(#ffe0ec, #ffb3d1);
+    }
+    .layer2 {
+      width: 160px;
+      height: 60px;
+      background: linear-gradient(#fff0f6, #ffc4dd);
+      position: relative;
+      top: -18px;
+    }
+    .layer3 {
+      width: 120px;
+      height: 50px;
+      background: linear-gradient(#fff5f9, #ffd6e8);
+      position: relative;
+      top: -35px;
+    }
+
+    /* Candles */
+.candle {
+  width: 10px;
+  height: 35px;
+  background: white;
+  margin: 0 5px;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+}
+.flame {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 12px;
+  height: 18px;
+  background: radial-gradient(circle at 40% 40%, #fff6a9, #ff7e00);
+  border-radius: 50%;
+  transform: translateX(-50%) scale(0);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+/* New natural flicker animation using JS */
+.candles.on .flame {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(0.9); opacity: 0.9; }
+      50% { transform: translateX(-52%) scale(1.1); opacity: 1; }
+      100% { transform: translateX(-48%) scale(0.85); opacity: 0.85; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* BUTTONS */
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btns button {
+      margin: 5px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #ff85c4;
+      color: #fff7f7;
+      font-weight: bold;
+      transition: transform 0.15s, background 0.3s;
+    }
+    .btns button:hover {
+      background: #ff337f;
+    }
+    .btns button:active {
+      transform: scale(0.95);
+    }
+
+    /* PHOTO & MESSAGE CONTAINER */
+    .message-container {
+      display: none;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity 1s ease, transform 0.8s ease;
+      margin-top: 20px;
+      padding: 20px;
+      max-width: 350px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.5);
+      backdrop-filter: blur(6px);
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      animation: popUp 0.6s ease forwards;
+    }
+    .message-container.show {
+      display: block !important;
+      opacity: 1 !important;
+      transform: scale(1) !important;
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.6); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 1; }
+      70% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+
+    .photo img {
+      max-width: 200px;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.7);
+      animation: pulseGlow 2s infinite;
+      margin-bottom: 15px;
+    }
+
+    .message {
+      white-space: pre-line; 
+      font-size: 18px;
+      line-height: 1.6;
+      color: #fff;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 25px rgba(255, 105, 180, 0.7); }
+      50% { box-shadow: 0 0 45px rgba(255, 182, 193, 1); }
+    }
+
+    /* CONFETTI */
+    #confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* HEARTS */
+    .heart {
+      position: fixed;
+      bottom: -10px;
+      color: #ff5c9e;
+      font-size: 18px;
+      animation: floatUp 6s linear forwards;
+      z-index: 0;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      .cake { transform: scale(0.7); margin: 0 auto; }
+      .photo img { max-width: 140px; }
+      .message { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas id="confetti"></canvas>
+
+    <!-- GREETING -->
+    <div class="greeting">Happy Birthday, Maam Kathleen Mae Vallespin! 🎉</div>
+
+    <!-- CAKE -->
+    <div class="cake">
+      <div class="candles" id="candles">
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+      </div>
+      <div class="layer layer3"></div>
+      <div class="layer layer2"></div>
+      <div class="layer layer1"></div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btns">
+      <button id="btn-light" onclick="lightCandles()">🎂 Light Candles</button>
+      <button id="btn-blow" onclick="blowCandles()" style="display:none;">💨 Blow Out</button>
+      <button id="btn-message" onclick="showMessage()" style="display:none;">🌟 My Message</button>
+    </div>
+
+    <!-- MESSAGE CONTAINER -->
+    <div class="message-container">
+      <div class="photo">
+        <img src="https://scontent.fmnl25-7.fna.fbcdn.net/v/t39.30808-6/500225470_1664476264258199_5805047587750888179_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEVJaK7x42TSQSh_Hr4OPD04mT7p3ZQQZLiZPundlBBkiovNP3S3Z0Ay8UTdmU-kv6zejNtzO4_4zN5ZvqEwwDu&_nc_ohc=Alrxk8CwO5IQ7kNvwGS2z4S&_nc_oc=AdkD2uonBlnndE7cTLPdtXLvCVC7ljQpQ8_BoMK0tACy_KymmnZ-eurt6PSnt9f9hHg&_nc_zt=23&_nc_ht=scontent.fmnl25-7.fna&_nc_gid=90kOPDyvMVveWZ56cBOUOg&oh=00_AfY73ILhmoZS-2OVnS7mqW1L9z82ZW4pcsNOxgF0SGCOow&oe=68D5FDBF" alt="Her Photo">
+      </div>
+      <div class="message" id="message"></div>
+    </div>
+
+  </div>
+
+  <!-- Background music -->
+  <audio id="bg-music" loop>
+    <source src="HAPPY BIRTHDAY INSTRUMENTAL.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const candles = document.getElementById('candles');
+    const message = document.getElementById('message');
+    const confettiCanvas = document.getElementById('confetti');
+    const ctx = confettiCanvas.getContext('2d');
+    const music = document.getElementById('bg-music');
+
+    const btnLight = document.getElementById("btn-light");
+    const btnBlow = document.getElementById("btn-blow");
+    const btnMessage = document.getElementById("btn-message");
+
+    let typingTimeouts = [];
+    let confettiPieces = [];
+    let fireworksParticles = [];
+    let runningConfetti = false;
+    let runningFireworks = false;
+
+    function lightCandles(){
+      candles.classList.add('on');
+      btnLight.style.display = "none";
+      btnBlow.style.display = "inline-block";
+      btnMessage.style.display = "inline-block";
+      music.currentTime = 0;
+      music.play().catch(() => alert("Click again to allow music 🎵"));
+    }
+
+    function blowCandles(){
+      candles.classList.remove('on');
+      // music continues even after blowing out
+    }
+
+    function showMessage(){
+  typingTimeouts.forEach(timeout => clearTimeout(timeout));
+  typingTimeouts = [];
+
+  // Message separated line by line
+  let lines = [
+    "Happy Birthday, Maam Kathleen Mae Vallespin! ❤️",
+    "Wishing you an amazing day filled with laughter, joy, and lots of cake! 🍰",
+    "May all your dreams come true this year, and may you continue to shine bright like the wonderful person you are.",
+    "Cheers to more fun memories, smiles, and adventures ahead! 🥳💖"
+  ];
+
+  const containerEl = document.querySelector(".message-container");
+  containerEl.classList.add("show");
+
+  const msgEl = document.querySelector(".message");
+  msgEl.innerHTML = "";
+  let i = 0;
+
+  function typing(){
+    if(i < lines.length){
+      let line = lines[i];
+      let j = 0;
+
+      function typeLine(){
+        if(j < line.length){
+          msgEl.innerHTML += line.charAt(j);
+          j++;
+          typingTimeouts.push(setTimeout(typeLine, 50));
+        } else {
+          msgEl.innerHTML += "<br><br>"; // add spacing between lines
+          i++;
+          typingTimeouts.push(setTimeout(typing, 100));
+        }
+      }
+      typeLine();
+    } else {
+      startConfetti();
+      startFireworks();
+    }
+  }
+
+  typing();
+}
+
+    // --- CONFETTI ---
+    function startConfetti(){
+      resizeCanvas();
+      runningConfetti = true;
+      confettiPieces = [];
+
+      const colors = ['#ff7ab6','#ffd76b','#7ee7fd','#b8ffb0','#ffad7a'];
+      for(let i=0;i<150;i++){
+        confettiPieces.push({
+          x: Math.random()*confettiCanvas.width,
+          y: Math.random()*confettiCanvas.height,
+          w: 6+Math.random()*6,
+          h: 8+Math.random()*8,
+          rot: Math.random()*360,
+          speed: 1+Math.random()*3,
+          color: colors[Math.floor(Math.random()*colors.length)],
+          sway: Math.random()*2
+        });
+      }
+    }
+
+    // --- FIREWORKS ---
+    function startFireworks(){
+      resizeCanvas();
+      runningFireworks = true;
+
+      function createFirework(){
+        let x = Math.random() * confettiCanvas.width;
+        let y = Math.random() * (confettiCanvas.height/2);
+        let count = 60;
+        const colors = ['#ff5c9e','#ffd76b','#7ee7fd','#b8ffb0','#ffad7a','#ffffff'];
+        for(let i=0;i<count;i++){
+          let angle = (Math.PI*2) * (i/count);
+          let speed = Math.random()*5 + 2;
+          fireworksParticles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            color: colors[Math.floor(Math.random()*colors.length)]
+          });
+        }
+      }
+
+      setInterval(createFirework, 1200);
+    }
+
+    // --- ANIMATION LOOP ---
+    function animate(){
+      ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+
+      // confetti
+      if(runningConfetti){
+        confettiPieces.forEach(p=>{
+          p.y += p.speed;
+          p.x += Math.sin((p.y+p.sway)*0.05)*2;
+          p.rot += p.speed*2;
+          if(p.y > confettiCanvas.height) p.y = -10;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot*Math.PI/180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+          ctx.restore();
+        });
+      }
+
+      // fireworks
+      if(runningFireworks){
+        fireworksParticles.forEach((p,index)=>{
+          p.x += p.vx;
+          p.y += p.vy;
+          p.alpha -= 0.01;
+          ctx.globalAlpha = p.alpha;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,3,0,Math.PI*2);
+          ctx.fill();
+          if(p.alpha <= 0){
+            fireworksParticles.splice(index,1);
+          }
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    function resizeCanvas(){
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    resizeCanvas();
+    animate(); // start animation loop immediately
+  </script>
+</body>
+</html>
